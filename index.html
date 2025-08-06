@@ -8,20 +8,18 @@
 
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
-  
   <title>Frontend Mentor | Mortgage repayment calculator</title>
 
   <style>
-
-*, *::before, *::after {
-  box-sizing: border-box;
-}
     /* BASE CUSTOMIZATION */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
 
-      @font-face {
+    @font-face {
       font-family: 'PlusJakartaSans';
       src: url('./fonts/PlusJakartaSans-VariableFont_wght.ttf') format('truetype');
-      font-weight: 100 900; /* бо variable font */
+      font-weight: 100 900; 
       font-style: normal;
     }
 
@@ -146,8 +144,7 @@
       color: #999;
     }
 
-    .input-pair-labels
-    {
+    .input-pair-labels{
       column-gap: 1rem;
     }
     
@@ -185,24 +182,6 @@
       outline: none;
     }
 
-    .input-group-amount:hover,
-    .input-pair:hover
-    {
-      border: 2px solid black;
-    }
-
-   .radio-option:hover
-    {
-      border: 2px solid #dcd932;
-    }
-
-    .input-group-amount:hover input::placeholder,
-    .input-pair:hover input::placeholder
-     {
-  color: transparent;
-}
-
-
     .input-pair {
       flex: 1; 
       display: flex;
@@ -218,9 +197,32 @@
       align-self: flex-end;
     }
 
+    .input-group-amount:hover,
+    .input-pair:hover
+    {
+      border: 2px solid black;
+    }
+
+    .input-group-amount:hover input::placeholder,
+    .input-pair:hover input::placeholder
+    {
+      color: transparent;
+    }
+
     #mortgage-rate,
     #mortgage-years {
       width: 2rem;
+    }
+
+    .input-group-amount:focus-within:not(.input-error),
+    .input-pair:focus-within:not(.input-error) {
+      border: 2px solid #dcd932; 
+    }
+
+    .input-group-amount:focus-within:not(.input-error) .input-icon,
+    .input-pair:focus-within:not(.input-error) .input-icon {
+      background-color: #dcd932; 
+      color: black; 
     }
 
     .radio-group{
@@ -244,6 +246,10 @@
 
       transition: background 0.3s;
       cursor: pointer;
+    }
+
+    .radio-option:hover{
+      border: 2px solid #dcd932;
     }
 
     .input-check {
@@ -407,33 +413,32 @@
     }
 
     .right-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-}
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+    }
 
-.placeholder-img {
-  max-width: 100%;
-  max-height: 15rem;
-  object-fit: contain;
-  opacity: 0.8;
-}
+    .placeholder-img {
+      max-width: 100%;
+      max-height: 15rem;
+      object-fit: contain;
+      opacity: 0.8;
+    }
 
-.empty-text{
-  text-align: center;
-  margin-bottom: 1rem;
-}
+    .empty-text{
+      text-align: center;
+      margin-bottom: 1rem;
+    }
 
-/* Ховаємо блок з результатами спочатку */
-.title-right,
-.right-text,
-.right-card{
-  display: none;
-}
+    .title-right,
+    .right-text,
+    .right-card{
+      display: none;
+    }
 
      /* ERROR */
 
@@ -447,39 +452,52 @@
     }
 
     #error-message-amount {
-  color: red; 
-  font-weight: 600; 
-  margin-bottom: 1rem; 
-  display: none;
-}
+      color: red; 
+      font-weight: 600; 
+      margin-bottom: 1rem; 
+      display: none;
+    }
 
-#error-message-radio{
-  color: red; 
-  font-weight: 600; 
-  margin-top: 1rem; 
-  display: none;
+    #error-message-radio{
+      color: red; 
+      font-weight: 600; 
+      margin-top: 1rem; 
+      display: none;
+    }
 
-}
+    #error-message-years,
+    #error-message-rate {
+      color: red; 
+      font-weight: 600; 
+      font-size: 0.85rem;
+      display: none;
+      width: fit-content; 
+    }
 
-.error-mess-y-r {
-  display: none; /* ховаємо контейнер за замовчуванням */
-  column-gap: 1rem;
-  /* додатково */
-  margin-top: 0.5rem;
-}
+    #error-message-years {
+      margin: 0;
+      margin-left: 0.1rem;
+      margin-top: 0.5rem; 
+    }
 
-#error-message-years,
-#error-message-rate {
-  color: red; 
-  font-weight: 600; 
-  flex: 1; 
-  display: flex; /* завжди flex, щоб іконка і текст були на одній лінії */
-  align-items: center;
-  margin: 0;
-  margin-left: 0.1rem; /* щоб відступити від іконки */
-  font-size: 0.85rem;
-}
+    #error-message-rate {
+      margin-top: -1rem;
+      margin-left: calc(100% / 2 + 0.6rem);
+    }
+  
+    #error-message-years[style*="display: none"] + #error-message-rate {
+      margin-top: 0.5rem;
+    }
 
+    .input-group-amount.input-error,
+    .input-pair.input-error {
+      border: 2px solid red;
+    }
+
+    .input-icon.input-icon-error {
+      background-color: red !important;
+      color: white !important;
+    }
 
     @media (max-width: 768px) {
 
@@ -488,6 +506,10 @@
       }
       .mortgage-calculator {
         flex-direction: column;
+        height: auto;
+      }
+
+      .mortgage-calculator.error-visible {
         height: auto;
       }
 
@@ -507,35 +529,6 @@
         width: 100%;
       }
     }
-
-
-/* Зелений контур і іконка, коли фокус і нема помилки */
-.input-group-amount:focus-within:not(.input-error),
-.input-pair:focus-within:not(.input-error) {
-  border: 2px solid #dcd932; /* зелений контур */
-}
-
-.input-group-amount:focus-within:not(.input-error) .input-icon,
-.input-pair:focus-within:not(.input-error) .input-icon {
-  background-color: #dcd932; /* зелена іконка */
-  color: black; /* або білий, залежно від дизайну */
-}
-
-/* Червоний контур при помилці */
-.input-group-amount.input-error,
-.input-pair.input-error {
-  border: 2px solid red;
-}
-
-/* Червона іконка при помилці */
-.input-icon.input-icon-error {
-  background-color: red !important;
-  color: white !important;
-}
-
-
-
-
   </style>
 </head>
 <body>
@@ -569,14 +562,12 @@
         </div>
       </div>     
 
-      <div class="error-mess-y-r">
         <div id="error-message-years">
           This field is required
         </div>
         <div id="error-message-rate">
           This field is required
         </div>
-      </div>
 
       <label for="radio-group" class="type-label">Mortgage Type</label>
       <div class="radio-group">
@@ -598,10 +589,8 @@
         <i class="ri-calculator-line"></i>
         <span class="calc-text">Calculate Repayments</span>
       </button>
-      
-      
-       
     </div>
+
     <div class="right-side">
       <div class="right-placeholder">
         <img src="/assets/images/illustration-empty.svg" alt="Placeholder" class="placeholder-img">
@@ -626,7 +615,7 @@
 
 
 <script>
-  // insert commas into the integer part for readability (e.g., 1000000 → 1,000,000)
+  // Format amount with commas (1000000 → 1,000,000)
   const mortgageAmountInput = document.getElementById('mortgage-amount');
 
   mortgageAmountInput.addEventListener('input', e => {
@@ -636,6 +625,7 @@
     e.target.value = parts.join('.');
   });
 
+  // Logic for validation, errors, and calculations
   const calcButton = document.querySelector('.calc-button');
 
   const amountInput = document.getElementById('mortgage-amount');
@@ -652,105 +642,82 @@
   const monthlyEl = document.getElementById('monthly-payment');
   const totalEl = document.getElementById('total-repayment');
 
-  calcButton.addEventListener('click', () => {
-    // Remove red borders before validation
-    amountInput.classList.remove('input-error');
-    yearsInput.classList.remove('input-error');
-    rateInput.classList.remove('input-error');
+  const errorMessageAmount = document.getElementById('error-message-amount');
+  const errorMessageYears = document.getElementById('error-message-years');
+  const errorMessageRate = document.getElementById('error-message-rate');
+  const errorMessageRadio = document.getElementById('error-message-radio');
 
-    // Remove commas before parsing
+  calcButton.addEventListener('click', () => {
+    // Clear all errors and error styles before validation
+    amountInput.classList.remove('input-error');
+    amountInput.parentElement.classList.remove('input-error');
+    amountInputIcon.classList.remove('input-icon-error');
+    errorMessageAmount.style.display = 'none';
+
+    yearsInput.classList.remove('input-error');
+    yearsInput.parentElement.classList.remove('input-error');
+    yearsInputIcon.classList.remove('input-icon-error');
+    errorMessageYears.style.display = 'none';
+
+    rateInput.classList.remove('input-error');
+    rateInput.parentElement.classList.remove('input-error');
+    rateInputIcon.classList.remove('input-icon-error');
+    errorMessageRate.style.display = 'none';
+
+    errorMessageRadio.style.display = 'none';
+
+    // Extract values, removing commas from amount
     const principal = parseFloat(amountInput.value.replace(/,/g, ''));
     const years = parseFloat(yearsInput.value);
     const rate = parseFloat(rateInput.value);
 
-  const errorMessageAmount = document.getElementById('error-message-amount');
-const errorMessageYR = document.querySelector('.error-mess-y-r');
-const errorMessageYears = document.getElementById('error-message-years');
-const errorMessageRate = document.getElementById('error-message-rate');
-const errorMessageRadio = document.getElementById('error-message-radio');
+    let valid = true;
 
-// спочатку ховаємо всі
-errorMessageAmount.style.display = 'none';
-errorMessageYR.style.display = 'none';
-errorMessageYears.style.display = 'none';
-errorMessageRate.style.display = 'none';
-errorMessageRadio.style.display = 'none';
+    if (isNaN(principal) || principal <= 0) {
+      amountInput.classList.add('input-error');
+      amountInput.parentElement.classList.add('input-error');
+      amountInputIcon.classList.add('input-icon-error');
+      errorMessageAmount.style.display = 'block';
+      valid = false;
+    }
 
-let valid = true;
+    if (isNaN(years) || years <= 0) {
+      yearsInput.classList.add('input-error');
+      yearsInput.parentElement.classList.add('input-error');
+      yearsInputIcon.classList.add('input-icon-error');
+      errorMessageYears.style.display = 'block';
+      valid = false;
+    }
 
-if (isNaN(principal) || principal <= 0) {
-  amountInput.classList.add('input-error');
-amountInput.parentElement.classList.add('input-error'); // ДОДАНО
+    if (isNaN(rate) || rate < 0) {
+      rateInput.classList.add('input-error');
+      rateInput.parentElement.classList.add('input-error');
+      rateInputIcon.classList.add('input-icon-error');
+      errorMessageRate.style.display = 'flex';
+      valid = false;
+    }
 
-  amountInputIcon.classList.add('input-icon-error');
-  errorMessageYR.style.display = 'flex';
-  errorMessageAmount.style.display = 'block';
-  valid = false;
-}
-
-if (isNaN(years) || years <= 0 || !Number.isInteger(years)) {
-  rateInput.classList.add('input-error');
-rateInput.parentElement.classList.add('input-error');
-  yearsInput.parentElement.classList.add('input-error')
-  yearsInputIcon.classList.add('input-icon-error');
-  errorMessageYR.style.display = 'flex';
-  errorMessageYears.style.display = 'block';
-  valid = false;
-}
-
-if (isNaN(rate) || rate < 0) {
-  rateInput.classList.add('input-error');
-  rateInputIcon.classList.add('input-icon-error');
-  errorMessageRate.style.display = 'flex';
-  valid = false;
-}
-
-const selectedRadio = [...typeInputs].find(r => r.checked);
-
-if (!selectedRadio) {
-  // Якщо не вибрано
-  errorMessageRadio.style.display = 'block';
-  valid = false;
-}
-
-
+    const selectedRadio = [...typeInputs].find(r => r.checked);
+    if (!selectedRadio) {
+      errorMessageRadio.style.display = 'block';
+      valid = false;
+    }
 
     if (!valid) {
       document.querySelector('.mortgage-calculator').classList.add('error-visible');
-      return;
+      return; // do not proceed with calculation if there are errors
     } else {
-      errorMessageAmount.style.display = 'none';
-      errorMessageYears.style.display = 'none';
-      errorMessageRate.style.display = 'none';
-      errorMessageYR.style.display = 'none';
-      errorMessageRadio.style.display = 'none';
-
-      // Очищення всіх input-error класів
-      amountInput.classList.remove('input-error');
-      amountInput.parentElement.classList.remove('input-error');
-      amountInputIcon.classList.remove('input-icon-error'); // ДОДАНО
-
-      yearsInput.classList.remove('input-error');
-      yearsInput.parentElement.classList.remove('input-error');
-      yearsInputIcon.classList.remove('input-icon-error'); // ДОДАНО
-
-      rateInput.classList.remove('input-error');
-      rateInput.parentElement.classList.remove('input-error');
-      rateInputIcon.classList.remove('input-icon-error'); // ДОДАНО
-
       document.querySelector('.mortgage-calculator').classList.remove('error-visible');
     }
 
-
-
-    const selectedType = [...typeInputs].find(r => r.checked).value;
+    // Determine mortgage type and calculate payments
+    const selectedType = selectedRadio.value;
     const months = years * 12;
     const monthlyRate = rate / 12 / 100;
 
     let monthlyPayment = 0;
     let totalRepayment = 0;
 
-     // Count monthly and total payment 
     if (selectedType === 'repayment') {
       if (monthlyRate === 0) {
         monthlyPayment = principal / months;
@@ -763,21 +730,18 @@ if (!selectedRadio) {
       totalRepayment = monthlyPayment * months + principal;
     }
 
-   
-
+    // Display results with formatting
     monthlyEl.textContent = '£' + monthlyPayment.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     totalEl.textContent = '£' + totalRepayment.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  
+
+    // Show the results block
     document.querySelector('.title-right').style.display = 'flex';
     document.querySelector('.right-text').style.display = 'flex';
     document.querySelector('.right-card').style.display = 'flex';
     document.querySelector('.right-placeholder').style.display = 'none';
-
-    
-
   });
 
-   // Logic for Clear button
+  // Logic for Clear button (reset)
   const clearButton = document.querySelector('.clear');
 
   clearButton.addEventListener('click', () => {
@@ -793,23 +757,30 @@ if (!selectedRadio) {
     document.querySelector('.right-placeholder').style.display = 'flex';
 
     typeInputs.forEach(radio => {
-        radio.checked = false;
-      });
+      radio.checked = false;
+    });
 
     amountInput.classList.remove('input-error');
-    yearsInput.classList.remove('input-error');
-    rateInput.classList.remove('input-error');
+    amountInput.parentElement.classList.remove('input-error');
+    amountInputIcon.classList.remove('input-icon-error');
 
-    const errorMessage = document.getElementsByClassName('error-message');
+    yearsInput.classList.remove('input-error');
+    yearsInput.parentElement.classList.remove('input-error');
+    yearsInputIcon.classList.remove('input-icon-error');
+
+    rateInput.classList.remove('input-error');
+    rateInput.parentElement.classList.remove('input-error');
+    rateInputIcon.classList.remove('input-icon-error');
+
     errorMessageAmount.style.display = 'none';
     errorMessageYears.style.display = 'none';
     errorMessageRate.style.display = 'none';
+    errorMessageRadio.style.display = 'none';
+
     document.querySelector('.mortgage-calculator').classList.remove('error-visible');
-    
   });
-
-
 </script>
+
 
 </html>
 
