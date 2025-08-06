@@ -12,6 +12,10 @@
   <title>Frontend Mentor | Mortgage repayment calculator</title>
 
   <style>
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
     /* BASE CUSTOMIZATION */
 
       @font-face {
@@ -58,7 +62,7 @@
     }
 
     .mortgage-calculator.error-visible {
-      height: 33rem;
+      height: 35rem;
     }
 
 
@@ -90,6 +94,10 @@
       border: transparent;
       font-size: 1rem;
       cursor: pointer;
+    }
+
+    .clear:hover{
+      color: #091820;
     }
 
     .input-group-amount,
@@ -176,6 +184,24 @@
     #mortgage-amount:focus {
       outline: none;
     }
+
+    .input-group-amount:hover,
+    .input-pair:hover
+    {
+      border: 2px solid black;
+    }
+
+   .radio-option:hover
+    {
+      border: 2px solid #dcd932;
+    }
+
+    .input-group-amount:hover input::placeholder,
+    .input-pair:hover input::placeholder
+     {
+  color: transparent;
+}
+
 
     .input-pair {
       flex: 1; 
@@ -288,6 +314,10 @@
       border: transparent;
     }
 
+    .calc-button:hover{
+      opacity: 0.7;
+    }
+
     .calc-text{
       align-self: center;
       text-align: center;
@@ -310,12 +340,14 @@
       padding: 2rem;
     }
 
-    .title-right{
+    .title-right,
+    .title-empty{
       font-style: normal;
       color: #ffffff;
     }
 
-    .right-text{
+    .right-text,
+    .empty-text{
       margin-top: 1rem;
       color: white;
       font-size: 0.9rem;
@@ -327,7 +359,7 @@
       width: 90%;
       align-self: center;
       margin-top: 2rem;
-      height: 12.5rem;
+      height: 14.5rem;
       background-color: #091820;
       border-radius: 1rem;
       box-shadow: 0rem -3px 0px yellow;
@@ -374,23 +406,86 @@
       font-weight: 600;
     }
 
+    .right-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.placeholder-img {
+  max-width: 100%;
+  max-height: 15rem;
+  object-fit: contain;
+  opacity: 0.8;
+}
+
+.empty-text{
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Ховаємо блок з результатами спочатку */
+.title-right,
+.right-text,
+.right-card{
+  display: none;
+}
 
      /* ERROR */
 
     input.input-error {
-      border: 2px solid red !important;
       outline: none;
     }
 
-    #error-message{
-      color: red; 
-      font-weight: 600; 
-      margin-bottom: 1rem; 
-      margin-top: 1rem; 
-      display: none;
+    .input-icon.input-icon-error{
+      background-color: red !important;
+      color: white !important;
     }
 
+    #error-message-amount {
+  color: red; 
+  font-weight: 600; 
+  margin-bottom: 1rem; 
+  display: none;
+}
+
+#error-message-radio{
+  color: red; 
+  font-weight: 600; 
+  margin-top: 1rem; 
+  display: none;
+
+}
+
+.error-mess-y-r {
+  display: none; /* ховаємо контейнер за замовчуванням */
+  column-gap: 1rem;
+  /* додатково */
+  margin-top: 0.5rem;
+}
+
+#error-message-years,
+#error-message-rate {
+  color: red; 
+  font-weight: 600; 
+  flex: 1; 
+  display: flex; /* завжди flex, щоб іконка і текст були на одній лінії */
+  align-items: center;
+  margin: 0;
+  margin-left: 0.1rem; /* щоб відступити від іконки */
+  font-size: 0.85rem;
+}
+
+
     @media (max-width: 768px) {
+
+      body{
+        height: auto;
+      }
       .mortgage-calculator {
         flex-direction: column;
         height: auto;
@@ -414,6 +509,33 @@
     }
 
 
+/* Зелений контур і іконка, коли фокус і нема помилки */
+.input-group-amount:focus-within:not(.input-error),
+.input-pair:focus-within:not(.input-error) {
+  border: 2px solid #dcd932; /* зелений контур */
+}
+
+.input-group-amount:focus-within:not(.input-error) .input-icon,
+.input-pair:focus-within:not(.input-error) .input-icon {
+  background-color: #dcd932; /* зелена іконка */
+  color: black; /* або білий, залежно від дизайну */
+}
+
+/* Червоний контур при помилці */
+.input-group-amount.input-error,
+.input-pair.input-error {
+  border: 2px solid red;
+}
+
+/* Червона іконка при помилці */
+.input-icon.input-icon-error {
+  background-color: red !important;
+  color: white !important;
+}
+
+
+
+
   </style>
 </head>
 <body>
@@ -426,27 +548,40 @@
       </div>
       <label for="mortgage-amount">Mortgage Amount</label>
       <div class="input-group-amount">
-        <span class="input-icon">£</span>
+        <span id="icon-amount" class="input-icon">£</span>
         <input id="mortgage-amount" type="text" step="0.001" placeholder="Enter amount" />
       </div> 
+      <div id="error-message-amount">
+        This field is required
+      </div>
       <div class="input-pair-labels">
         <label for="mortgage-years" class="years-label">Mortgage Term</label>
         <label for="mortgage-rate" class="rate-label">Interest Rate</label>
       </div>
       <div class="input-group-term-rate">
         <div class="input-pair">
-          <span class="input-icon">years</span>
+          <span id="icon-years" class="input-icon">years</span>
           <input id="mortgage-years" type="number" step="0.001" placeholder="Enter years" />
         </div>
         <div class="input-pair">
-          <span class="input-icon">%</span>
+          <span id="icon-rate" class="input-icon">%</span>
           <input id="mortgage-rate" type="number" step="0.001" placeholder="Enter rate" />
         </div>
       </div>     
+
+      <div class="error-mess-y-r">
+        <div id="error-message-years">
+          This field is required
+        </div>
+        <div id="error-message-rate">
+          This field is required
+        </div>
+      </div>
+
       <label for="radio-group" class="type-label">Mortgage Type</label>
       <div class="radio-group">
         <label class="radio-option">
-          <input class="input-check" type="radio" name="mortgage-type" value="repayment" checked>
+          <input class="input-check" type="radio" name="mortgage-type" value="repayment">
           <span class="custom-radio"></span>
           Repayment
         </label>
@@ -456,27 +591,35 @@
           Interest Only
         </label>
       </div>
+      <div id="error-message-radio">
+        This field is required
+      </div>
       <button class="calc-button">
         <i class="ri-calculator-line"></i>
         <span class="calc-text">Calculate Repayments</span>
       </button>
-      <div id="error-message">
-        Please fill in all fields correctly.
-      </div>
+      
       
        
     </div>
     <div class="right-side">
-      <h3 class="title-right">Your results</h3>
-      <p class="right-text">Your results are shown below based on the information you provided. 
-        To adjust the results, edit the form and click “calculate repayments” again.</p>
-      <div class="right-card">
-        <span class="right-card-text">Your monthly repayments</span>
-        <span id="monthly-payment" class="right-card-sum">£0</span>
-        <hr class="right-card-line">
-        <span class="right-card-text-bottom">Total you'll repay over the term</span>
-        <span id="total-repayment" class="right-card-num-bottom">£0</span>
+      <div class="right-placeholder">
+        <img src="/assets/images/illustration-empty.svg" alt="Placeholder" class="placeholder-img">
+        <h3 class="title-empty">Results shown here</h3>
+        <p class="empty-text">Complete the form and click "calculate repayments" to
+          see what your monthly repayments would be.
+        </p>
       </div>
+        <h3 class="title-right">Your results</h3>
+        <p class="right-text">Your results are shown below based on the information you provided. 
+          To adjust the results, edit the form and click “calculate repayments” again.</p>
+        <div class="right-card">
+          <span class="right-card-text">Your monthly repayments</span>
+          <span id="monthly-payment" class="right-card-sum">£0</span>
+          <hr class="right-card-line">
+          <span class="right-card-text-bottom">Total you'll repay over the term</span>
+          <span id="total-repayment" class="right-card-num-bottom">£0</span>
+        </div>
     </div>
   </div>
 </body>
@@ -496,8 +639,14 @@
   const calcButton = document.querySelector('.calc-button');
 
   const amountInput = document.getElementById('mortgage-amount');
+  const amountInputIcon = document.getElementById('icon-amount');
+
   const yearsInput = document.getElementById('mortgage-years');
+  const yearsInputIcon = document.getElementById('icon-years');
+
   const rateInput = document.getElementById('mortgage-rate');
+  const rateInputIcon = document.getElementById('icon-rate');
+
   const typeInputs = document.getElementsByName('mortgage-type');
 
   const monthlyEl = document.getElementById('monthly-payment');
@@ -514,36 +663,84 @@
     const years = parseFloat(yearsInput.value);
     const rate = parseFloat(rateInput.value);
 
-    const errorMessage = document.getElementById('error-message');
-    errorMessage.style.display = 'none';
+  const errorMessageAmount = document.getElementById('error-message-amount');
+const errorMessageYR = document.querySelector('.error-mess-y-r');
+const errorMessageYears = document.getElementById('error-message-years');
+const errorMessageRate = document.getElementById('error-message-rate');
+const errorMessageRadio = document.getElementById('error-message-radio');
 
-    let valid = true;
+// спочатку ховаємо всі
+errorMessageAmount.style.display = 'none';
+errorMessageYR.style.display = 'none';
+errorMessageYears.style.display = 'none';
+errorMessageRate.style.display = 'none';
+errorMessageRadio.style.display = 'none';
 
-    if (isNaN(principal) || principal <= 0) {
-      amountInput.classList.add('input-error');
-      valid = false;
-    }
+let valid = true;
 
-    if (isNaN(years) || years <= 0 || !Number.isInteger(years)) {
-      yearsInput.classList.add('input-error');
-      valid = false;
-    }
+if (isNaN(principal) || principal <= 0) {
+  amountInput.classList.add('input-error');
+amountInput.parentElement.classList.add('input-error'); // ДОДАНО
 
-    if (isNaN(rate) || rate < 0) {
-      rateInput.classList.add('input-error');
-      valid = false;
-    }
+  amountInputIcon.classList.add('input-icon-error');
+  errorMessageYR.style.display = 'flex';
+  errorMessageAmount.style.display = 'block';
+  valid = false;
+}
+
+if (isNaN(years) || years <= 0 || !Number.isInteger(years)) {
+  rateInput.classList.add('input-error');
+rateInput.parentElement.classList.add('input-error');
+  yearsInput.parentElement.classList.add('input-error')
+  yearsInputIcon.classList.add('input-icon-error');
+  errorMessageYR.style.display = 'flex';
+  errorMessageYears.style.display = 'block';
+  valid = false;
+}
+
+if (isNaN(rate) || rate < 0) {
+  rateInput.classList.add('input-error');
+  rateInputIcon.classList.add('input-icon-error');
+  errorMessageRate.style.display = 'flex';
+  valid = false;
+}
+
+const selectedRadio = [...typeInputs].find(r => r.checked);
+
+if (!selectedRadio) {
+  // Якщо не вибрано
+  errorMessageRadio.style.display = 'block';
+  valid = false;
+}
+
+
 
     if (!valid) {
-      errorMessage.style.display = 'block';
       document.querySelector('.mortgage-calculator').classList.add('error-visible');
-      monthlyEl.textContent = '£' + 0;
-      totalEl.textContent = '£' + 0;
       return;
     } else {
-      errorMessage.style.display = 'none';
+      errorMessageAmount.style.display = 'none';
+      errorMessageYears.style.display = 'none';
+      errorMessageRate.style.display = 'none';
+      errorMessageYR.style.display = 'none';
+      errorMessageRadio.style.display = 'none';
+
+      // Очищення всіх input-error класів
+      amountInput.classList.remove('input-error');
+      amountInput.parentElement.classList.remove('input-error');
+      amountInputIcon.classList.remove('input-icon-error'); // ДОДАНО
+
+      yearsInput.classList.remove('input-error');
+      yearsInput.parentElement.classList.remove('input-error');
+      yearsInputIcon.classList.remove('input-icon-error'); // ДОДАНО
+
+      rateInput.classList.remove('input-error');
+      rateInput.parentElement.classList.remove('input-error');
+      rateInputIcon.classList.remove('input-icon-error'); // ДОДАНО
+
       document.querySelector('.mortgage-calculator').classList.remove('error-visible');
     }
+
 
 
     const selectedType = [...typeInputs].find(r => r.checked).value;
@@ -566,8 +763,18 @@
       totalRepayment = monthlyPayment * months + principal;
     }
 
+   
+
     monthlyEl.textContent = '£' + monthlyPayment.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     totalEl.textContent = '£' + totalRepayment.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  
+    document.querySelector('.title-right').style.display = 'flex';
+    document.querySelector('.right-text').style.display = 'flex';
+    document.querySelector('.right-card').style.display = 'flex';
+    document.querySelector('.right-placeholder').style.display = 'none';
+
+    
+
   });
 
    // Logic for Clear button
@@ -580,14 +787,25 @@
     monthlyEl.textContent = '£0';
     totalEl.textContent = '£0';
 
+    document.querySelector('.title-right').style.display = 'none';
+    document.querySelector('.right-text').style.display = 'none';
+    document.querySelector('.right-card').style.display = 'none';
+    document.querySelector('.right-placeholder').style.display = 'flex';
+
+    typeInputs.forEach(radio => {
+        radio.checked = false;
+      });
+
     amountInput.classList.remove('input-error');
     yearsInput.classList.remove('input-error');
     rateInput.classList.remove('input-error');
 
-    const errorMessage = document.getElementById('error-message');
-    errorMessage.style.display = 'none';
+    const errorMessage = document.getElementsByClassName('error-message');
+    errorMessageAmount.style.display = 'none';
+    errorMessageYears.style.display = 'none';
+    errorMessageRate.style.display = 'none';
     document.querySelector('.mortgage-calculator').classList.remove('error-visible');
-
+    
   });
 
 
